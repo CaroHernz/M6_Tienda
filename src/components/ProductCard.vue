@@ -1,16 +1,82 @@
 <template>
-    <div class="card bg-base-100 w-96 shadow-sm">
-  <figure>
-    <img
-      src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-      alt="Shoes" />
-  </figure>
-  <div class="card-body">
-    <h2 class="card-title">Card Title</h2>
-    <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-    <div class="card-actions justify-end">
-      <button class="btn btn-primary">Buy Now</button>
+  <div class="card bg-base-100 shadow-md bordered hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
+    <figure class="flex-shrink-0">
+      <img class=" h-50" :src="product.image" :alt="product.title" loading="lazy" />
+    </figure>
+    <div class="card-body flex flex-col flex-grow p-4">
+      <div class="flex-grow">
+        <h2 class="card-title text-xl">{{ product.title }}</h2>
+      </div>
+      <div class="card-description mb-3">
+        <p ref="descriptionElement" class="text-gray-600 text-sm" :class="{ 'line-clamp-3': !isExpanded }">
+          {{product.description }}
+        </p>
+        <button v-if="needsTruncation" @click="toggleDescription"
+          class="text-neutral text-xs font-medium mt-1 hover:underline focus:outline-none">
+          {{ isExpanded ? 'Ver menos' : 'Ver más' }}
+        </button>
+
+        <div class="text-end">
+          <span class="badge badge-outline text-accent badge-sm">{{ product.category }}</span>
+        </div>
+      </div>
+
+      <div class="flex justify-between items-center">
+        <p class="font-bold text-center text-secondary text-lg">{{ formatPrice(product.price) }}</p>
+      </div>
+
+      <div class="flex items-center gap-1 justify-between">
+        <div class="items-center gap-2">
+          <label class="text-sm text-gray-600">Cantidad:</label>
+          <input v-model.number="quantity" type="number" min="1" max="10"
+            class="input input-bordered input-sm w-16 text-center">
+        </div>
+        <button class="btn btn-primary btn-sm " @click="handleAddToCart" :disabled="quantity < 1">Agregar al carrito</button>
+      </div>
     </div>
   </div>
-</div>
 </template>
+<script setup>
+import { ref, nextTick, onMounted } from 'vue'
+const props = defineProps({
+  product: {
+    type: Object,
+    required: true
+  }
+})
+const emit = defineEmits(['add-to-cart'])
+const quantity = ref(1)
+const isExpanded = ref(false)
+const descriptionElement = ref(null)
+const needsTruncation = ref(false)
+
+const checkTruncation = () => {
+  if (!descriptionElement.value) return
+
+  const element = descriptionElement.value
+  needsTruncation.value = element.scrollHeight > element.clientHeight
+}
+
+const toggleDescription = () => {
+  isExpanded.value = !isExpanded.value
+  nextTick(() => { checkTruncation() })
+}
+
+const handleAddToCart = (event) => {
+  if (quantity.value < 1) return
+  emit('add-to-cart', props.product, quantity.value)
+  const button = event.target
+  const originalText = button.innerHTML
+  button.innerHTML = '✅ Agregado!'
+  button.classList.add('btn-success')
+}
+const formatPrice = (price) => {
+  return `$${price.toFixed(2)}`
+}
+onMounted(() => {
+  nextTick(() => {
+    setTimeout(checkTruncation, 100)
+  })
+})
+
+</script>
