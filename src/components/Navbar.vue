@@ -92,7 +92,9 @@ const handleLogout = () => {
 }
 </script>
 <style scoped>
+
 li a {
+    color:black;
     font-weight: 500;
     transition: all 0.3s ease;
 }
