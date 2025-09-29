@@ -22,7 +22,6 @@
         <li>
             <a href="/productos">Productos</a>
         </li>
-      <li><a href="/carrito">Carrito</a></li>
       </ul>
     </div>
     <button class="p-2 btn-ghost">
@@ -36,7 +35,6 @@
       <li>
         <a href="/productos">Productos</a>
       </li>
-      <li><a href="/carrito">Carrito</a></li>
     </ul>
   </div>
   
@@ -69,7 +67,7 @@
 </template>
 <script setup>
 import { ref } from 'vue'
-import { useAuthStore } from '../stores/auth'
+import { useAuthStore } from '../services/auth'
 import { useRouter } from 'vue-router'
 
 const authStore = useAuthStore()

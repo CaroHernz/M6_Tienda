@@ -4,7 +4,7 @@ import { useRoute } from 'vue-router'
 import Navbar from './components/Navbar.vue'
 import Footer from './components/Footer.vue'
 import Hero from './components/Hero.vue'
-import { useAuthStore } from './stores/auth'
+import { useAuthStore } from './services/auth'
 
 const authStore = useAuthStore()
 
