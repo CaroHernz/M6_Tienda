@@ -116,9 +116,6 @@ const handleSearchButton = () => {
 const clearSearch=()=> {
     searchTerm.value = ''
 }
-const addToCart = (product, quantity = 1) => {
-  console.log('Agregar al carrito:', product.title, 'Cantidad:', quantity)
-}
 
 const formatPrice = (price) => `$${price.toFixed(2)}`
 

@@ -38,6 +38,8 @@
 </template>
 <script setup>
 import { ref, nextTick, onMounted } from 'vue'
+import { useCartStore } from '../store/cartStore'
+
 const props = defineProps({
   product: {
     type: Object,
@@ -45,6 +47,7 @@ const props = defineProps({
   }
 })
 const emit = defineEmits(['add-to-cart', 'show-details'])
+const cartStore = useCartStore()
 const quantity = ref(1)
 const isExpanded = ref(false)
 const descriptionElement = ref(null)
@@ -63,11 +66,23 @@ const toggleDescription = () => {
 
 const handleAddToCart = (event) => {
   if (quantity.value < 1) return
-  emit('add-to-cart', props.product, quantity.value)
+  for(let i = 0; i < quantity.value; i++) {
+    cartStore.addToCart(props.product)
+  }
+  cartStore.openCart()
+
   const button = event.target
   const originalText = button.innerHTML
   button.innerHTML = '✅ Agregado!'
+  button.classList.remove('btn-primary')
   button.classList.add('btn-success')
+
+  setTimeout(() => {
+    button.innerHTML=originalText
+    button.classList.remove('btn-success')
+    button.classList.add('btn-primary')
+    quantity.value = 1
+  }, 2000)
 }
 const formatPrice = (price) => {
   return `$${price.toFixed(2)}`

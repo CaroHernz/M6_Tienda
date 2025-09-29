@@ -20,8 +20,8 @@ export const useCartStore = defineStore('cart', () => {
             existingItem.quantity += 1
         } else {
             items.value.push({
-                id: product.id, name: product.nombre || product.title,
-                price: product.precio || product.price,
+                id: product.id, name: product.title,
+                price: product.price,
                 quantity:1
             })
         }
