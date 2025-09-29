@@ -1,4 +1,14 @@
 <template>
+    <!-- Notificación de logout -->
+    <Transition name="notification">
+        <div v-if="showLogoutMessage" class="alert alert-success fixed top-20 right-4 z-50 w-auto shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>Sesión cerrada exitosamente</span>
+        </div>
+    </Transition>
+    
     <div class="navbar bg-primary-content/80 shadow-lg">
   <div class="navbar-start">
     <div class="dropdown">
@@ -12,7 +22,6 @@
         <li>
             <a href="/productos">Productos</a>
         </li>
-      <li><a href="/carrito">Carrito</a></li>
       </ul>
     </div>
     <button class="p-2 btn-ghost">
@@ -26,7 +35,6 @@
       <li>
         <a href="/productos">Productos</a>
       </li>
-      <li><a href="/carrito">Carrito</a></li>
     </ul>
   </div>
   
@@ -52,12 +60,36 @@
                 </div>
             </div>
         </div>
-    <a class="btn btn-primary" href="/login">Iniciar Sesión</a>
+    <button v-if="!authStore.isAuthenticated" class="btn btn-primary" @click="router.push('/login')">Iniciar Sesión</button>
+    <button v-else class="btn btn-outline btn-primary" @click="handleLogout">Cerrar Sesión</button>
   </div>
 </div>
 </template>
 <script setup>
+import { ref } from 'vue'
+import { useAuthStore } from '../services/auth'
+import { useRouter } from 'vue-router'
 
+const authStore = useAuthStore()
+const router = useRouter()
+const showLogoutMessage = ref(false)
+
+// Verificar autenticación al montar el componente
+authStore.checkAuth()
+
+const handleLogout = () => {
+  authStore.logout()
+  
+  // Mostrar mensaje de confirmación
+  showLogoutMessage.value = true
+  
+  // Ocultar mensaje después de 3 segundos
+  setTimeout(() => {
+    showLogoutMessage.value = false
+  }, 3000)
+  
+  router.push('/')
+}
 </script>
 <style scoped>
 li a {
@@ -67,5 +99,21 @@ li a {
 li a:hover {
     color: var(--color-primary);
     background-color: var(--color-primary-content);
+}
+
+/* Animaciones para la notificación */
+.notification-enter-active,
+.notification-leave-active {
+    transition: all 0.3s ease;
+}
+
+.notification-enter-from {
+    opacity: 0;
+    transform: translateX(100px);
+}
+
+.notification-leave-to {
+    opacity: 0;
+    transform: translateX(100px);
 }
 </style>
