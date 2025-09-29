@@ -94,3 +94,9 @@ onMounted(() => {
 })
 
 </script>
+<style scoped>
+.card {
+  background-color: white;
+  color: black
+}
+</style>
