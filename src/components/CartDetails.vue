@@ -44,11 +44,6 @@
               :key="item.id" 
               class="flex items-center gap-3 p-3 bg-base-200 rounded-lg"
             >
-              <img 
-                :src="item.image" 
-                :alt="item.name" 
-                class="w-12 h-12 object-cover rounded"
-              />
               <div class="flex-1">
                 <h3 class="font-semibold text-sm">{{ item.name }}</h3>
                 <p class="text-primary font-bold">${{ item.price.toLocaleString() }}</p>
@@ -96,7 +91,7 @@
           <!-- Acciones -->
           <div class="mt-6 space-y-2">
             <button class="btn btn-primary btn-block">
-              Proceder al pago
+              Pagar
             </button>
             <button 
               class="btn btn-outline btn-error btn-block" 
