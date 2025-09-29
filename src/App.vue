@@ -3,6 +3,7 @@ import { computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import Navbar from './components/Navbar.vue'
 import Footer from './components/Footer.vue'
+import CartDetails from './components/CartDetails.vue'
 import Hero from './components/Hero.vue'
 import { useAuthStore } from './services/auth'
 
@@ -27,6 +28,7 @@ onMounted(() => {
       <component :is="Component" />
     </router-view>
   </main>
+  <CartDetails />
   <Footer />
 </template>
 
