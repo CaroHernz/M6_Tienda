@@ -46,7 +46,7 @@
 </template>
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import { useProductStore } from '../stores/api';
+import { useProductStore } from '../services/api';
 import ProductCard from '../components/ProductCard.vue'
 
 const productStore = useProductStore()
