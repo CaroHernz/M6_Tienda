@@ -8,7 +8,7 @@
         <h2 class="card-title text-xl">{{ product.title }}</h2>
       </div>
       <div class="card-description mb-3">
-        <p ref="descriptionElement" class="text-gray-600 text-sm" :class="{ 'line-clamp-3': !isExpanded }">
+        <p ref="descriptionElement" class="text-gray-600 text-sm" :class="{ 'line-clamp-1': !isExpanded }">
           {{product.description }}
         </p>
         <button v-if="needsTruncation" @click="toggleDescription"
@@ -44,7 +44,7 @@ const props = defineProps({
     required: true
   }
 })
-const emit = defineEmits(['add-to-cart'])
+const emit = defineEmits(['add-to-cart', 'show-details'])
 const quantity = ref(1)
 const isExpanded = ref(false)
 const descriptionElement = ref(null)
@@ -58,8 +58,7 @@ const checkTruncation = () => {
 }
 
 const toggleDescription = () => {
-  isExpanded.value = !isExpanded.value
-  nextTick(() => { checkTruncation() })
+  emit('show-details', props.product)
 }
 
 const handleAddToCart = (event) => {
