@@ -23,15 +23,16 @@
 
       <div class="flex justify-between items-center">
         <p class="font-bold text-center text-secondary text-lg">{{ formatPrice(product.price) }}</p>
+        <span class="text-xs" :class="product.stock > 0 ? 'text-success' : 'text-error'">Stock: {{ product.stock }}</span>
       </div>
 
       <div class="flex items-center gap-1 justify-between">
         <div class="items-center gap-2">
           <label class="text-sm text-gray-600">Cantidad:</label>
-          <input v-model.number="quantity" type="number" min="1" max="10"
+          <input v-model.number="quantity" type="number" min="1" :max="product.stock"
             class="input input-bordered input-sm w-16 text-center">
         </div>
-        <button class="btn btn-primary btn-sm " @click="handleAddToCart" :disabled="quantity < 1">Agregar al carrito</button>
+        <button class="btn btn-primary btn-sm " @click="handleAddToCart" :disabled="quantity < 1 || product.stock <= 0">Agregar al carrito</button>
       </div>
     </div>
   </div>
