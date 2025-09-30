@@ -1,5 +1,5 @@
 <template>
-  <div class="card bg-base-100 shadow-md bordered hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
+  <div v-if="(product.stock || 0) > 0" class="card bg-base-100 shadow-md bordered hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
     <figure class="flex-shrink-0">
       <img class=" h-50" :src="product.image" :alt="product.title" loading="lazy" />
     </figure>
