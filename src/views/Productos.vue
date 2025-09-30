@@ -84,7 +84,7 @@ onMounted(async()=> {
     await productStore.fetchProductos()
 })
 const productosFiltrados = computed(()=> {
-    let productos = productStore.list 
+    let productos = productStore.list.filter(p => (p.stock ?? 0) > 0)
     if(searchTerm.value) {
         productos = productos.filter(producto => 
             producto.title.toLowerCase().includes(searchTerm.value.toLowerCase())
@@ -96,7 +96,7 @@ const searchResultsMessage = computed(() => {
     if (!searchTerm.value) return ''
     
     const count = productosFiltrados.value.length
-    const total = productStore.list.length
+    const total = productStore.list.filter(p => (p.stock ?? 0) > 0).length
     
     if (count === 0) {
         return `No se encontraron resultados para "${searchTerm.value}"`

@@ -37,7 +37,10 @@ export const useProductStore = defineStore('products', () => {
             ids.value = []
 
             data.forEach((producto) => {
-                items.value[producto.id] = producto
+                const stock = (producto?.rating && typeof producto.rating.count === 'number')
+                  ? producto.rating.count
+                  : Math.floor(Math.random() * 20) + 1
+                items.value[producto.id] = { ...producto, stock }
                 ids.value.push(producto.id)
             })
             
