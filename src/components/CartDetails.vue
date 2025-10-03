@@ -90,8 +90,8 @@
 
           <!-- Acciones -->
           <div class="mt-6 space-y-2">
-            <button class="btn btn-primary btn-block">
-              Pagar
+            <button class="btn btn-primary btn-block" @click="finalizarCompra">
+              Finalizar Compra
             </button>
             <button 
               class="btn btn-outline btn-error btn-block" 
@@ -108,6 +108,18 @@
 
 <script setup>
 import { useCartStore } from '../store/cartStore'
+import { useProductStore } from '../services/api'
 
 const cartStore = useCartStore()
+const productStore = useProductStore()
+
+const finalizarCompra = () => {
+  const purchasedItems = cartStore.finalizarCompra()
+  if (purchasedItems) {
+    alert('¡Compra finalizada con éxito! Stock actualizado.')
+    cartStore.closeCart()
+  } else {
+    alert('Error: No se pudo finalizar la compra. Verifica el stock disponible.')
+  }
+}
 </script>

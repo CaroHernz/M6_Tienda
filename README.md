@@ -51,7 +51,7 @@ src/
 - ✅ Lista de productos en Home
 - ✅ Búsqueda de productos por nombre
 - ✅ Filtrado en tiempo real
-- [x] Control de stock disponible
+- ✅  Control de stock disponible
 - ✅ Popup de detalle de producto
 
 #### **Carrito de Compras**

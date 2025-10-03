@@ -50,7 +50,7 @@
                 <div tabindex="0" class="card card-compact dropdown-content bg-base-100 z-1 mt-3 w-52 shadow">
                     <div class="card-body">
                         <span class="text-lg font-bold">{{ cartStore.totalItems }} Items</span>
-                        <span class="text-secondary">Subtotal: ${{ cartStore.subtotal.toLocaleString() }}</span>
+                        <span class="text-secondary">Subtotal: ${{ cartStore.subtotal }}</span>
                         <div class="card-actions">
                             <button class="btn btn-primary btn-block" @click="cartStore.openCart()">Ver carrito</button>
                         </div>
