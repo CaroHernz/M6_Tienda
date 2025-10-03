@@ -48,31 +48,31 @@ src/
 ### ✅ Requisitos Cumplidos
 
 #### **Gestión de Productos**
-- [x] Lista de productos en Home
-- [x] Búsqueda de productos por nombre
-- [x] Filtrado en tiempo real
-- [x] Control de stock disponible
-- [x] Popup de detalle de producto
+- ✅ Lista de productos en Home
+- ✅ Búsqueda de productos por nombre
+- ✅ Filtrado en tiempo real
+- ✅  Control de stock disponible
+- ✅ Popup de detalle de producto
 
 #### **Carrito de Compras**
-- [x] Añadir productos con cantidad
-- [x] Ver carrito de compras
-- [x] Eliminar productos del carrito
-- [x] Botón para vaciar carrito completo
-- [x] Cálculo de totales
+- ✅ Añadir productos con cantidad
+- ✅ Ver carrito de compras
+- ✅ Eliminar productos del carrito
+- ✅ Botón para vaciar carrito completo
+- ✅ Cálculo de totales
 
 #### **Autenticación de Usuarios**
-- [x] Formulario de login funcional
-- [x] Validación de credenciales
-- [x] Mensajes de error para credenciales incorrectas
-- [x] Redirección a /home tras login exitoso
-- [x] Control de sesión con LocalStorage
-- [x] Navbar dinámico (Login/Logout)
+- ✅ Formulario de login funcional
+- ✅ Validación de credenciales
+- ✅ Mensajes de error para credenciales incorrectas
+- ✅ Redirección a /home tras login exitoso
+- ✅ Control de sesión con LocalStorage
+- ✅ Navbar dinámico (Login/Logout)
 
 #### **Servicios API Simulados**
-- [x] `API.js` - `Products.all()` retorna promesa con array de productos
-- [x] `Auth.js` - `Auth.login(creds)` retorna promesa con objeto User o error
-- [x] Credenciales válidas: `usuario1@mitienda.com` / `password`
+- ✅ `API.js` - `Products.all()` retorna promesa con array de productos
+- ✅ `Auth.js` - `Auth.login(creds)` retorna promesa con objeto User o error
+- ✅ Credenciales válidas: `usuario@ejemplo.com` / `password123`
 
 ## 🚀 Instalación y Configuración
 

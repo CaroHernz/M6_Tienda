@@ -41,20 +41,18 @@
   <div class="navbar-end">
     <div class="flex-none me-3">
             <div class="dropdown dropdown-end">
-                <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
+                <div tabindex="0" role="button" class="btn btn-ghost btn-circle" @click="ccartStore.openCart()">
                     <div class="indicator">
                         <i class="fa-solid fa-cart-shopping text-primary fa-2x"></i>
-                        <span class="badge badge-sm indicator-item">0</span>
+                        <span v-if="cartStore.totalItems > 0" class="badge badge-sm indicator-item">{{ cartStore.totalItems }}</span>
                     </div>
                 </div>
                 <div tabindex="0" class="card card-compact dropdown-content bg-base-100 z-1 mt-3 w-52 shadow">
                     <div class="card-body">
-                        <span class="text-lg font-bold">8 Items</span>
-                        <span class="text-secondary">Subtotal: $999</span>
+                        <span class="text-lg font-bold">{{ cartStore.totalItems }} Items</span>
+                        <span class="text-secondary">Subtotal: ${{ cartStore.subtotal }}</span>
                         <div class="card-actions">
-                            <a href="/carrito">
-                            <button class="btn btn-primary btn-block">Ir al carrito</button>
-                            </a>
+                            <button class="btn btn-primary btn-block" @click="cartStore.openCart()">Ver carrito</button>
                         </div>
                     </div>
                 </div>
@@ -68,9 +66,11 @@
 <script setup>
 import { ref } from 'vue'
 import { useAuthStore } from '../services/auth'
+import { useCartStore } from '../store/cartStore'
 import { useRouter } from 'vue-router'
 
 const authStore = useAuthStore()
+const cartStore = useCartStore()
 const router = useRouter()
 const showLogoutMessage = ref(false)
 
@@ -92,7 +92,9 @@ const handleLogout = () => {
 }
 </script>
 <style scoped>
+
 li a {
+    color:black;
     font-weight: 500;
     transition: all 0.3s ease;
 }

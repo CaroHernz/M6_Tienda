@@ -38,25 +38,53 @@
                 <ProductCard v-for="producto in productosFiltrados"
                     :key = "producto.id"
                     :product = "producto"
-                    @add-to-cart = "addToCart" />
+                    @add-to-cart = "addToCart"
+                    @show-details="openDetails" />
             </div>
+            
+            <dialog id="product_modal" class="modal" v-if="selectedProduct">
+                <div class="modal-box max-w-3xl">
+                    <form method="dialog">
+                        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                    </form>
+
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <img :src="selectedProduct.image" :alt="selectedProduct.title" class="w-40 h-40 object-contain mx-auto md:mx-0" />
+                        <div>
+                            <h3 class="font-bold text-lg">{{ selectedProduct.title }}</h3>
+                            <p class="py-2 text-sm text-gray-600">{{ selectedProduct.description }}</p>
+                            <div class="mt-2 flex items-center gap-2">
+                                <span class="badge badge-outline text-accent badge-sm">{{ selectedProduct.category }}</span>
+                                <span class="font-bold text-secondary text-lg">{{ formatPrice(selectedProduct.price) }}</span>
+                            </div>
+                            <div class="mt-4 flex items-center gap-2">
+                                <button class="btn btn-primary btn-sm" @click="addToCart(selectedProduct, 1)">Agregar al carrito</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form method="dialog" class="modal-backdrop">
+                    <button>close</button>
+                </form>
+            </dialog>
             
         </div>
     </div>
 </template>
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, nextTick } from 'vue'
 import { useProductStore } from '../services/api';
 import ProductCard from '../components/ProductCard.vue'
 
 const productStore = useProductStore()
 const searchTerm = ref('')
+const selectedProduct = ref(null)
 
 onMounted(async()=> {
     await productStore.fetchProductos()
 })
 const productosFiltrados = computed(()=> {
-    let productos = productStore.list 
+    let productos = productStore.list.filter(p => (p.stock ?? 0) > 0)
     if(searchTerm.value) {
         productos = productos.filter(producto => 
             producto.title.toLowerCase().includes(searchTerm.value.toLowerCase())
@@ -68,7 +96,7 @@ const searchResultsMessage = computed(() => {
     if (!searchTerm.value) return ''
     
     const count = productosFiltrados.value.length
-    const total = productStore.list.length
+    const total = productStore.list.filter(p => (p.stock ?? 0) > 0).length
     
     if (count === 0) {
         return `No se encontraron resultados para "${searchTerm.value}"`
@@ -88,7 +116,16 @@ const handleSearchButton = () => {
 const clearSearch=()=> {
     searchTerm.value = ''
 }
-const addToCart = (product, quantity = 1) => {
-  console.log('Agregar al carrito:', product.title, 'Cantidad:', quantity)
+
+const formatPrice = (price) => `$${price.toFixed(2)}`
+
+const openDetails = (product) => {
+    selectedProduct.value = product
+    nextTick(() => {
+        const dlg = document.getElementById('product_modal')
+        if (dlg && typeof dlg.showModal === 'function') {
+            dlg.showModal()
+        }
+    })
 }
 </script>
