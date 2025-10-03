@@ -85,8 +85,8 @@ src/
 1. Clonar repositorio
    
 ```
-git clone https://github.com/CaroHernz/
-cd 
+git clone https://github.com/CaroHernz/M6_Tienda/
+cd M6_Tienda
 ```
 
 2. Instalar dependencias
